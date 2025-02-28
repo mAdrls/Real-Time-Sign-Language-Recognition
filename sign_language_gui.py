@@ -1,101 +1,120 @@
-# import cv2
-# import mediapipe as mp
-# import numpy as np
-# import joblib
-# import tkinter as tk
-# from tkinter import scrolledtext
-# import time
-# from collections import deque
+import cv2
+import mediapipe as mp
+import numpy as np
+import joblib
+import tkinter as tk
+from tkinter import Label, Button, filedialog, Frame
 
-# # Load trained model
-# model = joblib.load("hand_sign_model.pkl")
+# Load trained model
+model = joblib.load("hand_sign_model.pkl")
 
-# # Initialize MediaPipe
-# mp_hands = mp.solutions.hands
-# hands = mp_hands.Hands(min_detection_confidence=0.5)
-# mp_draw = mp.solutions.drawing_utils
+# Initialize MediaPipe
+mp_hands = mp.solutions.hands
+hands = mp_hands.Hands(min_detection_confidence=0.5)
+mp_draw = mp.solutions.drawing_utils
 
-# # Initialize GUI
-# root = tk.Tk()
-# root.title("Sign Language Recognition")
+# Start webcam
+cap = cv2.VideoCapture(0)
 
-# # Text Display Box
-# text_display = scrolledtext.ScrolledText(root, width=40, height=5, font=("Arial", 14))
-# text_display.pack()
+# Create Tkinter UI
+root = tk.Tk()
+root.title("Hand Sign Recognition")
+root.geometry("600x400")
 
-# # Functions for Buttons
-# def clear_text():
-#     text_display.delete(1.0, tk.END)
+recognized_text = ""
 
-# def save_text():
-#     with open("recognized_text.txt", "w") as file:
-#         file.write(text_display.get(1.0, tk.END))
+# Function to update text display
+def update_text(prediction):
+    global recognized_text
+    recognized_text += prediction + " "
+    label_text.config(text=recognized_text)
 
-# def quit_app():
-#     root.destroy()
-#     cap.release()
-#     cv2.destroyAllWindows()
+# Function to remove last word or letter
+def remove_last():
+    global recognized_text
+    words = recognized_text.strip().split(" ")
+    if words:
+        words.pop()
+        recognized_text = " ".join(words) + " "
+        label_text.config(text=recognized_text)
 
-# # Buttons
-# btn_frame = tk.Frame(root)
-# btn_frame.pack()
+# Function to clear text
+def clear_text():
+    global recognized_text
+    recognized_text = ""
+    label_text.config(text=recognized_text)
 
-# clear_btn = tk.Button(btn_frame, text="Clear All", command=clear_text, bg="lightgray")
-# clear_btn.pack(side=tk.LEFT, padx=5)
+# Function to save text to a file
+def save_text():
+    file_path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text files", "*.txt")])
+    if file_path:
+        with open(file_path, "w") as file:
+            file.write(recognized_text)
 
-# save_btn = tk.Button(btn_frame, text="Save to a Text File", command=save_text, bg="green", fg="white")
-# save_btn.pack(side=tk.LEFT, padx=5)
+# Function to exit application
+def exit_app():
+    root.destroy()
+    cap.release()
+    cv2.destroyAllWindows()
 
-# quit_btn = tk.Button(btn_frame, text="Quit", command=quit_app, bg="red", fg="white")
-# quit_btn.pack(side=tk.LEFT, padx=5)
+# UI Layout
+frame_buttons = Frame(root)
+frame_buttons.pack(pady=10)
 
-# # Start webcam
-# cap = cv2.VideoCapture(0)
+label_text = Label(root, text="", font=("Arial", 14))
+label_text.pack(pady=20)
 
-# last_prediction = ""
-# last_time = time.time()
-# prediction_queue = deque(maxlen=5)  # Store last 5 predictions
+capture_button = Button(frame_buttons, text="Capture", command=lambda: update_text(current_prediction), font=("Arial", 12))
+capture_button.grid(row=0, column=0, padx=5, pady=5)
 
-# def recognize_sign():
-#     global last_prediction, last_time, prediction_queue
+remove_button = Button(frame_buttons, text="Remove Last", command=remove_last, font=("Arial", 12))
+remove_button.grid(row=0, column=1, padx=5, pady=5)
 
-#     ret, frame = cap.read()
-#     if not ret:
-#         return
+clear_button = Button(frame_buttons, text="Clear", command=clear_text, font=("Arial", 12))
+clear_button.grid(row=0, column=2, padx=5, pady=5)
 
-#     # Convert to RGB
-#     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-#     result = hands.process(frame_rgb)
+save_button = Button(frame_buttons, text="Save", command=save_text, font=("Arial", 12))
+save_button.grid(row=1, column=0, padx=5, pady=5)
 
-#     if result.multi_hand_landmarks:
-#         for hand_landmarks in result.multi_hand_landmarks:
-#             # Extract hand landmarks
-#             hand_data = []
-#             for landmark in hand_landmarks.landmark:
-#                 hand_data.extend([landmark.x, landmark.y])
+exit_button = Button(frame_buttons, text="Exit", command=exit_app, font=("Arial", 12))
+exit_button.grid(row=1, column=1, padx=5, pady=5)
 
-#             # Predict using trained model
-#             hand_data = np.array(hand_data).reshape(1, -1)
-#             prediction = model.predict(hand_data)[0]
-#             prediction_queue.append(prediction)
+# Webcam loop
+current_prediction = ""
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
 
-#             # Apply smoothing (only accept stable predictions)
-#             if len(set(prediction_queue)) == 1:  # If last 5 predictions are the same
-#                 current_time = time.time()
-#                 if prediction != last_prediction:
-#                     if current_time - last_time > 1:  # Add space if 1 second passed
-#                         text_display.insert(tk.END, " ")
-#                     text_display.insert(tk.END, prediction)
-#                     last_prediction = prediction
-#                     last_time = current_time
+    # Convert to RGB
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    result = hands.process(frame_rgb)
 
-#             # Draw hand landmarks
-#             mp_draw.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+    if result.multi_hand_landmarks:
+        for hand_landmarks in result.multi_hand_landmarks:
+            # Extract hand landmarks
+            hand_data = []
+            for landmark in hand_landmarks.landmark:
+                hand_data.extend([landmark.x, landmark.y])
 
-#     # Show webcam output
-#     cv2.imshow("Hand Sign Recognition", frame)
-#     root.after(10, recognize_sign)
+            # Predict using trained model
+            hand_data = np.array(hand_data).reshape(1, -1)
+            current_prediction = model.predict(hand_data)[0]
 
-# # Start recognition loop
-# root.after(10, recognize_sign)
-# root.mainloop()
+            # Display prediction on webcam
+            cv2.putText(frame, f"Prediction: {current_prediction}", (50, 50),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+            # Draw hand landmarks
+            mp_draw.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+    # Show output
+    cv2.imshow("Hand Sign Recognition", frame)
+    root.update()
+
+    if cv2.waitKey(1) & 0xFF == ord("q"):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+root.mainloop()
