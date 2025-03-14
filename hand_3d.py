@@ -1,61 +1,61 @@
-# # This below code is the 3D GUI Hand Sign Dectetor Code 
+# This below code is the 3D GUI Hand Sign Dectetor Code 
 
-# import cv2
-# import mediapipe as mp
-# import numpy as np
-# import matplotlib.pyplot as plt
+import cv2
+import mediapipe as mp
+import numpy as np
+import matplotlib.pyplot as plt
 
-# # Initialize MediaPipe Hand module
-# mp_hands = mp.solutions.hands
-# mp_drawing = mp.solutions.drawing_utils
+# Initialize MediaPipe Hand module
+mp_hands = mp.solutions.hands
+mp_drawing = mp.solutions.drawing_utils
 
-# cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0)
 
-# # Set up the 3D plot
-# fig = plt.figure(figsize=(6,6))
-# ax = fig.add_subplot(111, projection='3d')
-# ax.set_xlabel('X')
-# ax.set_ylabel('Y')
-# ax.set_zlabel('Z')
+# Set up the 3D plot
+fig = plt.figure(figsize=(6,6))
+ax = fig.add_subplot(111, projection='3d')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
 
-# # Initial empty scatter plot
-# scatter = ax.scatter([], [], [], c='r', marker='o')
+# Initial empty scatter plot
+scatter = ax.scatter([], [], [], c='r', marker='o')
 
-# with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) as hands:
-#     while cap.isOpened():
-#         ret, frame = cap.read()
-#         if not ret:
-#             break
+with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) as hands:
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
         
-#         # Convert BGR to RGB
-#         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-#         results = hands.process(frame_rgb)
+        # Convert BGR to RGB
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = hands.process(frame_rgb)
         
-#         if results.multi_hand_landmarks:
-#             for hand_landmarks in results.multi_hand_landmarks:
-#                 mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+        if results.multi_hand_landmarks:
+            for hand_landmarks in results.multi_hand_landmarks:
+                mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
-#                 # Extract 3D coordinates
-#                 landmarks_3d = []
-#                 for lm in hand_landmarks.landmark:
-#                     landmarks_3d.append([lm.x, lm.y, lm.z])
+                # Extract 3D coordinates
+                landmarks_3d = []
+                for lm in hand_landmarks.landmark:
+                    landmarks_3d.append([lm.x, lm.y, lm.z])
 
-#                 landmarks_3d = np.array(landmarks_3d)  # Convert to NumPy array
+                landmarks_3d = np.array(landmarks_3d)  # Convert to NumPy array
 
-#                 # Update the 3D plot with new landmarks
-#                 scatter._offsets3d = (landmarks_3d[:, 0], landmarks_3d[:, 1], landmarks_3d[:, 2])
+                # Update the 3D plot with new landmarks
+                scatter._offsets3d = (landmarks_3d[:, 0], landmarks_3d[:, 1], landmarks_3d[:, 2])
 
-#                 # Draw the plot again with updated landmarks
-#                 plt.draw()
-#                 plt.pause(0.01)
+                # Draw the plot again with updated landmarks
+                plt.draw()
+                plt.pause(0.01)
 
-#         cv2.imshow("3D Hand Tracking", frame)
+        cv2.imshow("3D Hand Tracking", frame)
 
-#         if cv2.waitKey(1) & 0xFF == ord('q'):
-#             break
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
-# cap.release()
-# cv2.destroyAllWindows()
+cap.release()
+cv2.destroyAllWindows()
 
 
 
