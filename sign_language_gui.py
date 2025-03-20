@@ -95,32 +95,32 @@ def exit_app():
     cv2.destroyAllWindows()  # Close OpenCV windows
 
 # UI Layout
-frame_buttons = Frame(root)
-frame_buttons.pack(pady=10)
+# frame_buttons = Frame(root)
+# frame_buttons.pack(pady=10)
 
-label_text = Label(root, text="", font=("Arial", 14))
-label_text.pack(pady=20)
+# label_text = Label(root, text="", font=("Arial", 14))
+# label_text.pack(pady=20)
 
-suggestion_label = Label(root, text="", font=("Arial", 12), fg="blue")
-suggestion_label.pack(pady=10)
+# suggestion_label = Label(root, text="", font=("Arial", 12), fg="blue")
+# suggestion_label.pack(pady=10)
 
-capture_button = Button(frame_buttons, text="Capture", command=update_text, font=("Arial", 12))
-capture_button.grid(row=0, column=0, padx=5, pady=5)
+# capture_button = Button(frame_buttons, text="Capture", command=update_text, font=("Arial", 12))
+# capture_button.grid(row=0, column=0, padx=5, pady=5)
 
-remove_button = Button(frame_buttons, text="Remove Last", command=remove_last, font=("Arial", 12))
-remove_button.grid(row=0, column=1, padx=5, pady=5)
+# remove_button = Button(frame_buttons, text="Remove Last", command=remove_last, font=("Arial", 12))
+# remove_button.grid(row=0, column=1, padx=5, pady=5)
 
-clear_button = Button(frame_buttons, text="Clear", command=clear_text, font=("Arial", 12))
-clear_button.grid(row=0, column=2, padx=5, pady=5)
+# clear_button = Button(frame_buttons, text="Clear", command=clear_text, font=("Arial", 12))
+# clear_button.grid(row=0, column=2, padx=5, pady=5)
 
-save_button = Button(frame_buttons, text="Save", command=save_text, font=("Arial", 12))
-save_button.grid(row=1, column=0, padx=5, pady=5)
+# save_button = Button(frame_buttons, text="Save", command=save_text, font=("Arial", 12))
+# save_button.grid(row=1, column=0, padx=5, pady=5)
 
-exit_button = Button(frame_buttons, text="Exit", command=exit_app, font=("Arial", 12))
-exit_button.grid(row=1, column=1, padx=5, pady=5)
+# exit_button = Button(frame_buttons, text="Exit", command=exit_app, font=("Arial", 12))
+# exit_button.grid(row=1, column=1, padx=5, pady=5)
 
-accept_button = tk.Button(root, text="Accept Suggestion", command=accept_suggestion, font=("Arial", 12))
-accept_button.pack(pady=5)
+# accept_button = tk.Button(root, text="Accept Suggestion", command=accept_suggestion, font=("Arial", 12))
+# accept_button.pack(pady=5)
 
 # Webcam loop
 def webcam_loop():
