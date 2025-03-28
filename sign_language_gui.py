@@ -166,3 +166,16 @@ threading.Thread(target=webcam_loop, daemon=True).start()
 
 # Start Tkinter main loop
 root.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
