@@ -1,66 +1,52 @@
 # Real-Time-Sign-Language-Recognition
 
-Overview
+### Overview
 
 This project focuses on real-time recognition of sign language alphabets using computer vision and deep learning techniques. The system captures hand gestures through a webcam, processes them using MediaPipe for hand tracking, and predicts the corresponding alphabet using a trained deep learning model.
 
-Features
+### Features
 
-Real-Time Hand Tracking: Uses MediaPipe to detect and track hand landmarks.
+- Real-Time Hand Tracking: Uses MediaPipe to detect and track hand landmarks.
 
-Alphabet Recognition: A deep learning model predicts sign language alphabets.
+- Alphabet Recognition: A deep learning model predicts sign language alphabets.
 
-Sentence Formation: Recognized alphabets are stored to form meaningful sentences.
+- Sentence Formation: Recognized alphabets are stored to form meaningful sentences.
 
-GUI for Better Usability: Implemented using Tkinter/PyQt to improve user experience.
+- GUI for Better Usability: Implemented using Tkinter/PyQt to improve user experience.
 
-Save & Clear Options: Users can save recognized text to a file or clear the input.
+- Save & Clear Options: Users can save recognized text to a file or clear the input.
 
-Button-Controlled Predictions: Reduces unwanted predictions by processing input only when a button is clicked.
+- Button-Controlled Predictions: Reduces unwanted predictions by processing input only when a button is clicked.
 
-Technologies Used
+### Technologies Used
 
-Python
+- Python
 
-OpenCV
+- OpenCV
 
-MediaPipe (for hand tracking)
+- MediaPipe (for hand tracking)
 
-TensorFlow/Keras (for deep learning model)
+- TensorFlow/Keras (for deep learning model)
 
-Tkinter/PyQt (for GUI)
+- Tkinter/PyQt (for GUI)
 
-Installation
 
-Clone the repository:
+### How It Works
 
-git clone https://github.com/mAdrls/Real-Time-Sign-Language-Recognition.git
-cd Real-Time-Sign-Language-Recognition
+- The webcam captures hand gestures in real time.
 
-Install dependencies:
+- MediaPipe extracts hand landmarks.
 
-pip install -r requirements.txt
+- Preprocessed hand landmarks are fed into a trained deep learning model.
 
-Run the application:
+- The model predicts the corresponding alphabet.
 
-python main.py
+- Recognized alphabets are displayed in the GUI and can be stored to form sentences.
 
-How It Works
+### Future Enhancements
 
-The webcam captures hand gestures in real time.
+- Support for More Sign Languages beyond alphabets.
 
-MediaPipe extracts hand landmarks.
+- Integration with Speech Synthesis for text-to-speech conversion.
 
-Preprocessed hand landmarks are fed into a trained deep learning model.
-
-The model predicts the corresponding alphabet.
-
-Recognized alphabets are displayed in the GUI and can be stored to form sentences.
-
-Future Enhancements
-
-Support for More Sign Languages beyond alphabets.
-
-Integration with Speech Synthesis for text-to-speech conversion.
-
-Improved Accuracy using a more advanced deep learning model.
+- Improved Accuracy using a more advanced deep learning model.
