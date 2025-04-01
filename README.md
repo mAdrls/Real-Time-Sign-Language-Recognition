@@ -26,7 +26,7 @@ This project focuses on real-time recognition of sign language alphabets using c
 
 - MediaPipe (for hand tracking)
 
-- TensorFlow/Keras (for deep learning model)
+- TensorFlow (for deep learning model)
 
 - Tkinter/PyQt (for GUI)
 
