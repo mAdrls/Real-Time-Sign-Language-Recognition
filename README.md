@@ -31,6 +31,22 @@ This project focuses on real-time recognition of sign language alphabets using c
 - Tkinter/PyQt (for GUI)
 
 
+### Installation
+
+- Clone the repository:
+
+''' git clone https://github.com/yourusername/sign-language-recognition.git 
+cd sign-language-recognition '''
+
+- Install dependencies:
+
+''' pip install -r requirements.txt '''
+
+- Run the application:
+
+'''python main.py'''
+
+
 ### How It Works
 
 - The webcam captures hand gestures in real time.
