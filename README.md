@@ -33,18 +33,18 @@ This project focuses on real-time recognition of sign language alphabets using c
 
 ### Installation
 
-- Clone the repository:
+1. Clone the repository:
+'''bash  
+git clone https://github.com/yourusername/sign-language-recognition.git 
+cd sign-language-recognition 
 
-''' git clone https://github.com/yourusername/sign-language-recognition.git 
-cd sign-language-recognition '''
+2. Install dependencies:
+'''bash
+pip install -r requirements.txt 
 
-- Install dependencies:
-
-''' pip install -r requirements.txt '''
-
-- Run the application:
-
-'''python main.py'''
+3. Run the application:
+'''bash
+python main.py
 
 
 ### How It Works
