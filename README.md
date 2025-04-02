@@ -28,7 +28,7 @@ This project focuses on real-time recognition of sign language alphabets using c
 
 - TensorFlow (for deep learning model)
 
-- Tkinter/PyQt (for GUI)
+- Tkinter (for GUI)
 
 
 
