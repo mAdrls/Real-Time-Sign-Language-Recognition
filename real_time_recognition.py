@@ -3,7 +3,7 @@ import mediapipe as mp
 import numpy as np
 import joblib
 
-# Load trained model
+# Load trained mod
 model = joblib.load("hand_sign_model.pkl")
 
 # Initialize MediaPipe
